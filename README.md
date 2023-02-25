@@ -1,4 +1,5 @@
 # API completa com Node.JS - Backend
+Este README contém um resumo de todas as etapas que foram executadas para criar este repositorio template.
 
 ## Node
 
