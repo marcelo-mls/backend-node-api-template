@@ -2,11 +2,11 @@
 const connection = require('./connection');
 
 async function getAll() {
-  const examples = await connection.execute(
-    'SELECT * FROM table'
+  const [result] = await connection.execute(
+    'SELECT * FROM table_example'
   );
 
-  return examples;
+  return result;
 }
 
 module.exports = {

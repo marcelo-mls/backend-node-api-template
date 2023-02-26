@@ -1,5 +1,5 @@
 # API completa com Node.JS - Backend
-Este README contém um resumo de todas as etapas que foram executadas para criar este repositorio template.
+Este README contém um resumo de todas as etapas que foram executadas para criar este repositório template.
 
 ## Node
 
@@ -86,9 +86,13 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
 ### Nodemon
   </summary>
 
-  - Instalação
+  - Instalação no Linux
   ```sh
   npm i nodemon -D
+  ```
+  - Instalação no Windows
+  ```sh
+  npm i -g nodemon && npm i nodemon -D
   ```
   > Usando o servidor com `nodemon`, toda vez que algum arquivo é salvo, o `nodemon` reinicia a aplicação automaticamente!
 
@@ -208,7 +212,7 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
   ```
   - Configurações
   ```sh
-  touch .env .env.example
+  touch .env.example
   ```
   ```txt
   // .env.example
@@ -216,7 +220,7 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
   MYSQL_PORT=3306
   MYSQL_USER=root
   MYSQL_PASSWORD=password
-  MYSQL_DATABASE=database
+  MYSQL_DATABASE=database_example
   ```
   > Após criar o arquivo não se esqueça de deletar o `.example` da extensão e adicionar o `.env` ao arquivo `.gitignore`
   ```sh
@@ -245,10 +249,6 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
 ### MySQL
   </summary>
 
-  - Docker
-  ```sh
-  docker run...
-  ```
   - Conector
   ```sh
   npm i mysql2
@@ -261,6 +261,7 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
   ```js
   // src/models/connection.js
   const mysql = require('mysql2/promise');
+  require('dotenv').config();
 
   const connection = mysql.createPool({
     host: process.env.MYSQL_HOST,
@@ -272,6 +273,30 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
 
   module.exports = connection;
   ```
+  - Docker
+  ```sh
+  docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -d mysql
+  ```
+  > **ATENÇÃO!** na flag `MYSQL_ROOT_PASSWORD` informe a senha definida do arquivo `.env`, o arquivo que **NÃO** vai para o `github`. Neste **EXEMPLO** foi utilizada a senha ilustrativa `password`. Informe também a porta passada no `.env`. Exemplo: **[porta_no_pc]:[porta_no_docker]**
+
+  [Documentação Docker:MySQL](https://hub.docker.com/_/mysql)
+  [Vídeo explicativo sobre Docker](https://www.youtube.com/watch?v=01MR38eDXz8)
+
+  - Criando Tabelas
+  ```sql
+  CREATE DATABASE IF NOT EXISTS database_example;
+
+  USE database_example;
+
+  CREATE TABLE table_example (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+      column_example VARCHAR(45) NOT NULL,
+      created_at VARCHAR(45) NOT NULL
+  );
+
+  INSERT INTO table_example (`id`, `column_example`, `created_at`)
+  VALUES ('1', 'example', 'example');
+```  
 </details>
 
 <details>
@@ -280,12 +305,14 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
 ### MongoDB
   </summary>
 
-  - Docker
-  ```sh
-  docker run --name mongodb -d -p 27017:27017 mongo:4
-  ```
   - Conector
   ```sh
   npm i mongoose
   ```
+  - Docker
+  ```sh
+  docker run --name mongodb -p 27017:27017 -d mongo
+  ```
+  [Documentação Docker:MongoDB](https://hub.docker.com/_/mongo)
+  [Vídeo explicativo sobre Docker](https://www.youtube.com/watch?v=01MR38eDXz8)
 </details>

@@ -1,7 +1,11 @@
 // Arquivo apenas de exemplo
-function getAll(_req, res) {
+const model = require('../models/example.model');
+
+// Arquivo apenas de exemplo
+async function getAll(_req, res) {
+  const result = await model.getAll();
   
-  return res.status(200).json('OK');
+  return res.status(200).json(result);
 }
 
 module.exports = {
