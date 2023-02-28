@@ -1,5 +1,6 @@
 # API completa com Node.JS - Backend
-Este README contém um resumo de todas as etapas que foram executadas para criar este repositório template.
+Esse repositório tem finalidade educativa e é apenas um **template** para auxiliar na criação de uma API com Node.JS, contém toda a configuração inicial.
+o README detalha todas (ou quase todas :upside_down_face:) as etapas que foram executadas para criar este repositório template.
 
 ## Node
 
@@ -400,3 +401,16 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
   ```
   > Este ultimo comando é apenas para ver os documentos existentes na coleção.
 </details>
+
+<br />
+<br />
+
+## `Ideias para novas features`
+
+- [x] MySQL;
+- [x] MongoDB;
+- [ ] CORS;
+- [ ] TypeScript;
+- [ ] JWT;
+- [ ] Nest;
+- [ ] Estruturar tudo em branchs separadas;
