@@ -352,6 +352,7 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
 
   // module.exports = app;
   ```
+  > Adicione as linhas acima no arquivo `src/app.js`
   ```js
   // src/models/example.js
 
@@ -371,7 +372,6 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
 
   module.exports = ModelExample;
   ```
-  > Adicione as linhas acima no arquivo `src/app.js`
 
   - Criando Coleção de Exemplo
   ```sh
