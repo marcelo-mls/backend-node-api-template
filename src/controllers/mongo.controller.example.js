@@ -1,9 +1,8 @@
 // Arquivo apenas de exemplo
-const model = require('../models/example.model');
+const ModelExample = require('../models/mongo.model.example');
 
-// Arquivo apenas de exemplo
 async function getAll(_req, res) {
-  const result = await model.getAll();
+  const result = await ModelExample.find();
   
   return res.status(200).json(result);
 }

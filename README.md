@@ -254,12 +254,21 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
   npm i mysql2
   ```
   > A integração entre o `Express` e o `MySQL` será feita através do módulo `mysql2`.
-  - Configurações
+
+  - Docker
   ```sh
-  mkdir src/models && touch src/models/connection.js
+  docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -d mysql
+  ```
+  > **ATENÇÃO!** na flag `MYSQL_ROOT_PASSWORD` informe a senha definida do arquivo `.env`, o arquivo que **NÃO** vai para o `github`. Neste **EXEMPLO** foi utilizada a senha ilustrativa `password`. Informe também a porta passada no `.env`. Exemplo: **[porta_no_pc]:[porta_no_docker]**
+
+  [Documentação Docker:MySQL](https://hub.docker.com/_/mysql)
+
+  - Configurando a Conexão
+  ```sh
+  mkdir src/database && touch src/database/mySqlConnection.js
   ```
   ```js
-  // src/models/connection.js
+  // src/database/mySqlConnection.js
   const mysql = require('mysql2/promise');
   require('dotenv').config();
 
@@ -273,16 +282,8 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
 
   module.exports = connection;
   ```
-  - Docker
-  ```sh
-  docker run --name mysql -e MYSQL_ROOT_PASSWORD=password -p 3306:3306 -d mysql
-  ```
-  > **ATENÇÃO!** na flag `MYSQL_ROOT_PASSWORD` informe a senha definida do arquivo `.env`, o arquivo que **NÃO** vai para o `github`. Neste **EXEMPLO** foi utilizada a senha ilustrativa `password`. Informe também a porta passada no `.env`. Exemplo: **[porta_no_pc]:[porta_no_docker]**
 
-  [Documentação Docker:MySQL](https://hub.docker.com/_/mysql)
-  [Vídeo explicativo sobre Docker](https://www.youtube.com/watch?v=01MR38eDXz8)
-
-  - Criando Tabelas
+   - Criando Tabela de Exemplo
   ```sql
   CREATE DATABASE IF NOT EXISTS database_example;
 
@@ -290,13 +291,14 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
 
   CREATE TABLE table_example (
     id INT PRIMARY KEY AUTO_INCREMENT,
-      column_example VARCHAR(45) NOT NULL,
-      created_at VARCHAR(45) NOT NULL
+    column_example VARCHAR(45) NOT NULL,
+    created_at VARCHAR(45) NOT NULL
   );
 
   INSERT INTO table_example (`id`, `column_example`, `created_at`)
   VALUES ('1', 'example', 'example');
-```  
+  ```
+  > Execute a query acima no `MySQL Workbench`
 </details>
 
 <details>
@@ -305,14 +307,96 @@ Este README contém um resumo de todas as etapas que foram executadas para criar
 ### MongoDB
   </summary>
 
-  - Conector
+  - ODM
   ```sh
   npm i mongoose
   ```
+
   - Docker
   ```sh
   docker run --name mongodb -p 27017:27017 -d mongo
   ```
   [Documentação Docker:MongoDB](https://hub.docker.com/_/mongo)
-  [Vídeo explicativo sobre Docker](https://www.youtube.com/watch?v=01MR38eDXz8)
+
+  - Configurando a Conexão (e um pouco mais)
+  ```sh
+  mkdir src/database src/models && touch src/database/mongoConnection.js src/models/example.js
+  ```
+  ```js
+  // src/database/mongoConnection.js
+
+  const mongoose = require('mongoose');
+
+  async function connectToMongo() {
+    mongoose.connect('mongodb://localhost:27017/')
+      .then(() => console.log('MongoDB successfully connected!'))
+      .catch((error) => console.log('Error connecting to MongoDB\n', error));
+  }
+
+  module.exports = connectToMongo;
+  ```
+  ```js
+  // src/app.js
+
+  // require('express-async-errors');
+  // const express = require('express');
+  // const router = require('./router');
+  const connectToMongo = require('./database/mongoConnection');
+
+  // const app = express();
+
+  // app.use(express.json());
+  // app.use(router);
+
+  connectToMongo();
+
+  // module.exports = app;
+  ```
+  ```js
+  // src/models/example.js
+
+  const mongoose = require('mongoose');
+
+  const {Schema, model} = mongoose;
+
+  const exampleSchema = new Schema({
+    column_example: { 
+      type: String,
+      required: true 
+    }
+  },
+  { timestamps: true });
+
+  const ModelExample = model('examples', exampleSchema);
+
+  module.exports = ModelExample;
+  ```
+  > Adicione as linhas acima no arquivo `src/app.js`
+
+  - Criando Coleção de Exemplo
+  ```sh
+  docker exec -it mongodb sh
+  ```
+  > Agora vc está dentro do terminal do Container com Mongo
+  ```sh
+  mongosh
+  ```
+  ```sh
+  show dbs
+  ```
+  ```sh
+  use test
+  ```
+  > Seguindo todos os passos acima, o banco criado deve ser o "test". Caso ele não exista, acesse o db correspondente pelo comando `use <nome do db>`
+  ```sh
+  show collections
+  ```
+  ```js
+  db.examples.insertOne({column_example: 'example'})
+  ```
+  > Da mesma forma a única collection em "test" deve ser "examples". Caso contrário apenas troque pelo nome da coleção correspondente em `db.<nome da collection>.insertOne()`
+  ```js
+  db.examples.find()
+  ```
+  > Este ultimo comando é apenas para ver os documentos existentes na coleção.
 </details>

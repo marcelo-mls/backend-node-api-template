@@ -1,10 +1,12 @@
 const express = require('express');
-// Linha apenas de exemplo
-const exampleController = require('./controllers/example.controller');
+// Linhas apenas de exemplo
+const mySqlController = require('./controllers/mySql.controller.example');
+const mongoController = require('./controllers/mongo.controller.example');
 
 const router = express.Router();
 
-// Linha apenas de exemplo
-router.get('/example', exampleController.getAll);
+// Linhas apenas de exemplo
+router.get('/example/mysql', mySqlController.getAll);
+router.get('/example/mongo', mongoController.getAll);
 
 module.exports = router;

@@ -1,5 +1,5 @@
 // Arquivo apenas de exemplo
-const connection = require('./connection');
+const connection = require('../database/mySqlConnection');
 
 async function getAll() {
   const [result] = await connection.execute(
