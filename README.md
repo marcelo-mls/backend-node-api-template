@@ -1,5 +1,5 @@
 # API completa com Node.JS - Backend
-Esse repositório tem finalidade educativa e é apenas um **template** para auxiliar na criação de uma API com Node.JS, contém toda a configuração inicial.
+Esse repositório tem finalidade de aprendizado e é apenas um **template** para auxiliar na criação de uma API com Node.JS, contém toda a configuração inicial.
 o README detalha todas (ou quase todas :upside_down_face:) as etapas que foram executadas para criar este repositório template.
 
 ## Node
