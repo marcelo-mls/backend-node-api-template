@@ -42,16 +42,26 @@ o README detalha todas (ou quase todas :upside_down_face:) as etapas que foram e
 
   - Criando o servidor
   ```sh
-  touch src/app.js src/server.js
+  touch src/router.js src/app.js src/server.js
+  ```
+  ```js
+  // src/router.js
+  const express = require('express');
+
+  const router = express.Router();
+
+  module.exports = router;
   ```
   ```js
   // src/app.js
   require('express-async-errors');
   const express = require('express');
+  const router = require('./router');
 
   const app = express();
 
   app.use(express.json());
+  app.use(router);
 
   module.exports = app;
   ```
@@ -60,7 +70,6 @@ o README detalha todas (ou quase todas :upside_down_face:) as etapas que foram e
   const app = require('./app');
 
   const PORT = 3001
-
   app.listen(PORT, () => console.log(`server running on port ${PORT}`));
   ```
   > Neste arquivo, por ora, houve apenas a inicialização do pacote do Express, com a função `express()`. Tudo que o Express nos dá está dentro da variável `app`, é como se ela fosse um “grande objeto” cheio de funções e informações úteis.
@@ -230,11 +239,11 @@ o README detalha todas (ou quase todas :upside_down_face:) as etapas que foram e
   > Adicione a linha abaixo no arquivo `server.js`
   ```js
   // src/server.js
+
   require('dotenv').config();
   // const app = require('./app');
 
   // const PORT = 3001
-
   // app.listen(PORT, () => console.log(`server running on port ${PORT}`));
   ```    
   </details>
@@ -337,23 +346,18 @@ o README detalha todas (ou quase todas :upside_down_face:) as etapas que foram e
   module.exports = connectToMongo;
   ```
   ```js
-  // src/app.js
+  // src/server.js
 
-  // require('express-async-errors');
-  // const express = require('express');
-  // const router = require('./router');
+  // require('dotenv').config();
+  // const app = require('./app');
   const connectToMongo = require('./database/mongoConnection');
-
-  // const app = express();
-
-  // app.use(express.json());
-  // app.use(router);
 
   connectToMongo();
 
-  // module.exports = app;
+  // const PORT = 3001;
+  // app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
   ```
-  > Adicione as linhas acima no arquivo `src/app.js`
+  > Adicione as linhas acima no arquivo `src/server.js`
   ```js
   // src/models/example.js
 
@@ -410,7 +414,7 @@ o README detalha todas (ou quase todas :upside_down_face:) as etapas que foram e
 - [x] MySQL;
 - [x] MongoDB;
 - [ ] CORS;
-- [ ] TypeScript;
+- [x] TypeScript;
 - [ ] JWT;
 - [ ] Nest;
-- [ ] Estruturar tudo em branchs separadas;
+- [ ] Estruturar tudo em branches separadas;
