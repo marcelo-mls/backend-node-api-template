@@ -338,7 +338,7 @@ o README detalha todas (ou quase todas :upside_down_face:) as etapas que foram e
   const mongoose = require('mongoose');
 
   async function connectToMongo() {
-    mongoose.connect('mongodb://localhost:27017/')
+    mongoose.connect('mongodb://localhost:27017/node_db')
       .then(() => console.log('MongoDB successfully connected!'))
       .catch((error) => console.log('Error connecting to MongoDB\n', error));
   }
@@ -365,13 +365,10 @@ o README detalha todas (ou quase todas :upside_down_face:) as etapas que foram e
 
   const {Schema, model} = mongoose;
 
-  const exampleSchema = new Schema({
-    column_example: { 
-      type: String,
-      required: true 
-    }
-  },
-  { timestamps: true });
+  const exampleSchema = new Schema(
+    { column_example: { type: String, required: true }},
+    { timestamps: true }
+  );
 
   const ModelExample = model('examples', exampleSchema);
 
@@ -390,16 +387,16 @@ o README detalha todas (ou quase todas :upside_down_face:) as etapas que foram e
   show dbs
   ```
   ```sh
-  use test
+  use node_db
   ```
-  > Seguindo todos os passos acima, o banco criado deve ser o "test". Caso ele não exista, acesse o db correspondente pelo comando `use <nome do db>`
+  > Seguindo todos os passos acima, o banco criado deve ser o "node_db". Caso ele não exista, acesse o db correspondente pelo comando `use <nome do db>`
   ```sh
   show collections
   ```
   ```js
   db.examples.insertOne({column_example: 'example'})
   ```
-  > Da mesma forma a única collection em "test" deve ser "examples". Caso contrário apenas troque pelo nome da coleção correspondente em `db.<nome da collection>.insertOne()`
+  > Da mesma forma a única collection em "node_db" deve ser "examples". Caso contrário apenas troque pelo nome da coleção correspondente em `db.<nome da collection>.insertOne()`
   ```js
   db.examples.find()
   ```
